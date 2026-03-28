@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProjectZero (Tuner Edition) | Autonomous MLOps Agent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;800&display=swap');
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #000000; 
+            color: #ffffff; 
+            background-image: 
+                radial-gradient(circle at 50% 0%, #111111 0%, transparent 70%),
+                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            background-attachment: fixed;
+        }
+        
+        .terminal { font-family: 'JetBrains Mono', monospace; }
+        .glass-panel {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        }
+        
+        .terminal-text { text-shadow: 0 0 8px rgba(74, 222, 128, 0.3); }
+        .glow-green { box-shadow: 0 0 15px rgba(74, 222, 128, 0.2); }
+        
+        .fade-in-line {
+            animation: fadeIn 0.2s ease-out forwards;
+            opacity: 0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #333333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555555; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-10 px-4 md:px-8">
+
+    <header class="w-full max-w-7xl mb-12 flex justify-between items-end">
+        <div class="flex items-center gap-5">
+            <img src="https://cdn.dribbble.com/userupload/20986322/file/original-7d678ccad37750cddb2d49ce5a80e082.jpg?resize=752x&vertical=center" 
+                 alt="ProjectZero Logo" 
+                 class="h-16 w-16 rounded-full border border-zinc-700 object-cover grayscale">
+            
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight flex items-baseline gap-2 text-white">
+                    ProjectZero
+                    <span class="text-xs text-zinc-500 font-mono tracking-widest uppercase">(tuner edition)</span>
+                </h1>
+                <p class="text-zinc-400 mt-2 text-lg font-medium">Autonomous MLOps Agent Platform by <span class="text-white">Alem.plus OSS</span></p>
+            </div>
+        </div>
+        
+        <div class="hidden md:flex flex-col items-end gap-2">
+            <span class="px-4 py-1.5 bg-zinc-900 text-white border border-zinc-800 rounded-full text-sm font-semibold flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span> Brain: gpt-oss
+            </span>
+            <span class="px-4 py-1.5 bg-green-950/30 text-green-400 border border-green-500/30 rounded-full text-xs font-semibold flex items-center gap-2 glow-green">
+                <span class="w-2 h-2 rounded-full bg-green-500"></span> Node: Zero.01
+            </span>
+        </div>
+    </header>
+
+    <main class="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-8 flex-1">
+        
+        <div class="lg:col-span-5 glass-panel p-6 lg:p-8 rounded-2xl flex flex-col h-full relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-zinc-500 to-transparent"></div>
+            
+            <h2 class="text-2xl font-bold mb-6 text-white flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 text-white"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" /></svg>
+                Target Specification
+            </h2>
+            
+            <div class="space-y-6 flex-1">
+                <div>
+                    <label class="block text-sm font-semibold text-zinc-400 mb-2">Base Model (HuggingFace ID/URL)</label>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-zinc-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                        </div>
+                        <input type="text" id="modelName" oninput="debounceCheck('model')" placeholder="unsloth/llama-3-8b-bnb-4bit" class="w-full bg-[#050505] border border-zinc-800 rounded-xl py-3.5 pl-10 pr-10 text-white focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all shadow-inner" autocomplete="off">
+                        <div id="modelStatusIcon" class="absolute right-3 top-3.5 text-zinc-500"></div>
+                    </div>
+                    <div id="modelInfo" class="text-xs mt-2 text-green-400 hidden flex items-center gap-1 font-mono"></div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-zinc-400 mb-2">Dataset Source</label>
+                    <div class="flex gap-2">
+                        <div class="relative flex-1 group">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-zinc-600">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+                            </div>
+                            <input type="text" id="datasetUrl" oninput="debounceCheck('dataset')" placeholder="HF ID или файл ->" class="w-full bg-[#050505] border border-zinc-800 rounded-xl py-3.5 pl-10 pr-10 text-white focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all shadow-inner" autocomplete="off">
+                            <div id="datasetStatusIcon" class="absolute right-3 top-3.5 text-zinc-500"></div>
+                        </div>
+                        <button onclick="document.getElementById('fileUpload').click()" class="bg-[#050505] border border-zinc-800 hover:border-green-500 hover:text-green-400 text-zinc-400 rounded-xl px-4 flex items-center justify-center transition-all shadow-inner" title="Upload Local Dataset">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                        </button>
+                        <input type="file" id="fileUpload" class="hidden" accept=".jsonl,.json,.csv,.parquet" onchange="handleFileUpload(event)">
+                    </div>
+                    <div id="datasetInfo" class="text-xs mt-2 text-green-400 hidden flex items-center gap-1 font-mono"></div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-zinc-400 mb-2">Agent Prompt</label>
+                    <textarea id="prompt" rows="5" class="w-full bg-[#050505] border border-zinc-800 rounded-xl p-3.5 text-white focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all shadow-inner resize-none leading-relaxed" placeholder="Чему должна научиться модель? Укажи детали: язык, стиль, параметры..."></textarea>
+                </div>
+            </div>
+
+            <button id="startBtn" onclick="startTraining()" class="w-full bg-white text-black hover:bg-green-400 hover:text-black font-extrabold py-4 rounded-xl transition-all transform hover:scale-[1.02] active:scale-95 flex justify-center items-center gap-2 mt-8 text-lg border border-transparent hover:border-green-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                Deploy Autonomous Agent
+            </button>
+        </div>
+
+        <div class="lg:col-span-7 flex flex-col gap-6">
+            
+            <div class="bg-[#050505] rounded-2xl border border-zinc-800 flex flex-col overflow-hidden h-[300px] shadow-2xl relative">
+                <div class="bg-[#0a0a0a] px-4 py-3 flex items-center justify-between border-b border-zinc-800">
+                    <div class="flex gap-2">
+                        <div class="w-3.5 h-3.5 rounded-full bg-zinc-700"></div>
+                        <div class="w-3.5 h-3.5 rounded-full bg-zinc-700"></div>
+                        <div class="w-3.5 h-3.5 rounded-full bg-zinc-700"></div>
+                    </div>
+                    <div class="text-[10px] text-zinc-500 font-mono tracking-tighter flex gap-4">
+                        <span>Cluster: ZERO-CORE</span>
+                        <span class="hidden sm:inline">GPU: RTX 2050</span>
+                    </div>
+                </div>
+                <div id="terminal" class="terminal p-4 overflow-y-auto flex-1 text-[13px] text-green-400 leading-relaxed whitespace-pre-wrap terminal-text">
+                    <span class="text-zinc-500">ProjectZero Tuner OS v0.1.0-alpha (ZERO-CORE)</span><br>
+                    <span class="text-zinc-500">Waiting for target specification...</span><br><br>
+                </div>
+            </div>
+
+            <div class="bg-[#050505] rounded-2xl border border-zinc-800 flex flex-col overflow-hidden h-[300px] shadow-2xl relative">
+                <div class="bg-[#0a0a0a] px-4 py-3 flex items-center justify-between border-b border-zinc-800">
+                    <div class="flex items-center gap-2 text-xs text-zinc-400 font-mono">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                        train_generated.py
+                    </div>
+                    <div id="codeStatus" class="text-[10px] text-zinc-600 font-mono uppercase tracking-widest animate-pulse">
+                        Awaiting stream...
+                    </div>
+                </div>
+                <div id="codeViewer" class="terminal p-4 overflow-y-auto flex-1 text-[13px] text-[#818cf8] leading-relaxed whitespace-pre-wrap"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="w-full max-w-7xl mt-8 mb-4 text-center border-t border-zinc-900 pt-6">
+        <p class="text-zinc-500 text-sm font-medium">
+            Powered by <a href="https://www.pzero.kz" target="_blank" class="text-white hover:text-green-400 transition-colors underline decoration-zinc-700 hover:decoration-green-400">ProjectZero ai</a>
+        </p>
+    </footer>
+
+    <script>
+        const iconLoading = `<svg class="animate-spin h-5 w-5 text-zinc-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
+        const iconSuccess = `<svg class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`;
+        const iconError = `<svg class="h-5 w-5 text-zinc-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>`;
+
+        let typingTimer;
+
+        function extractHFId(input) {
+            let val = input.trim();
+            if (val.includes('huggingface.co/')) {
+                const parts = val.split('huggingface.co/')[1].split('/');
+                if (val.includes('/datasets/')) {
+                    return parts[1] + '/' + parts[2];
+                }
+                return parts[0] + '/' + parts[1];
+            }
+            return val;
+        }
+
+        function debounceCheck(type) {
+            clearTimeout(typingTimer);
+            const inputVal = document.getElementById(type === 'model' ? 'modelName' : 'datasetUrl').value;
+            const iconDiv = document.getElementById(type === 'model' ? 'modelStatusIcon' : 'datasetStatusIcon');
+            const infoDiv = document.getElementById(type === 'model' ? 'modelInfo' : 'datasetInfo');
+
+            if (!inputVal) {
+                iconDiv.innerHTML = '';
+                infoDiv.classList.add('hidden');
+                return;
+            }
+
+            iconDiv.innerHTML = iconLoading;
+            infoDiv.classList.add('hidden');
+            typingTimer = setTimeout(() => validateHuggingFace(type, inputVal), 800);
+        }
+
+        async function validateHuggingFace(type, inputVal) {
+            // Если это локальный файл, пропускаем проверку HF
+            if (inputVal.startsWith('[Local File]')) return;
+
+            const id = extractHFId(inputVal);
+            const endpoint = type === 'model' 
+                ? `https://huggingface.co/api/models/${id}` 
+                : `https://huggingface.co/api/datasets/${id}`;
+            
+            const iconDiv = document.getElementById(type === 'model' ? 'modelStatusIcon' : 'datasetStatusIcon');
+            const infoDiv = document.getElementById(type === 'model' ? 'modelInfo' : 'datasetInfo');
+
+            try {
+                const res = await fetch(endpoint);
+                if (res.ok) {
+                    const data = await res.json();
+                    iconDiv.innerHTML = iconSuccess;
+                    infoDiv.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Verified: ${data.id}`;
+                    infoDiv.classList.remove('hidden', 'text-zinc-500', 'text-red-400');
+                    infoDiv.classList.add('text-green-400');
+                } else {
+                    iconDiv.innerHTML = iconError;
+                    infoDiv.innerHTML = `Not found on Hub`;
+                    infoDiv.classList.remove('hidden', 'text-green-400');
+                    infoDiv.classList.add('text-red-400'); // Изменил на красный для наглядности
+                }
+            } catch (err) {
+                iconDiv.innerHTML = iconError;
+            }
+        }
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const datasetInput = document.getElementById('datasetUrl');
+                const infoDiv = document.getElementById('datasetInfo');
+                const iconDiv = document.getElementById('datasetStatusIcon');
+                
+                datasetInput.value = `[Local File]: ${file.name}`;
+                iconDiv.innerHTML = iconSuccess;
+                infoDiv.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg> Ready (${(file.size / 1024).toFixed(1)} KB)`;
+                infoDiv.classList.remove('hidden', 'text-zinc-500', 'text-red-400');
+                infoDiv.classList.add('text-green-400');
+            }
+        }
+
+        async function startTraining() {
+            const btn = document.getElementById('startBtn');
+            const terminal = document.getElementById('terminal');
+            const codeViewer = document.getElementById('codeViewer');
+            const codeStatus = document.getElementById('codeStatus');
+            const modelName = document.getElementById('modelName').value;
+            const datasetUrl = document.getElementById('datasetUrl').value;
+            const prompt = document.getElementById('prompt').value;
+
+            if (!prompt || !modelName || !datasetUrl) {
+                terminal.innerHTML += `<div class="fade-in-line text-red-400">[SYSTEM] Error: All fields must be filled.</div>`;
+                terminal.scrollTo({ top: terminal.scrollHeight, behavior: 'smooth' });
+                return;
+            }
+
+            btn.disabled = true;
+            btn.classList.remove('bg-white', 'text-black', 'hover:bg-green-400', 'hover:text-black', 'hover:border-green-300');
+            btn.classList.add('bg-zinc-900', 'text-zinc-500', 'border-zinc-800');
+            btn.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Agent is working...`;
+            
+            terminal.innerHTML = `<span class="text-white">➜</span> <span class="text-zinc-400">~</span> ./start_agent.sh<br><br>`;
+            codeViewer.innerHTML = ""; 
+            codeStatus.innerHTML = `<span class="text-green-500 animate-pulse">● Waiting for stream...</span>`;
+
+            try {
+                const response = await fetch('/api/start', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ model_name: extractHFId(modelName), dataset_url: datasetUrl, prompt: prompt })
+                });
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder("utf-8");
+
+                while (true) {
+                    const { value, done } = await reader.read();
+                    if (done) break;
+                    
+                    const chunk = decoder.decode(value);
+                    const lines = chunk.split('\n');
+                    
+                    lines.forEach(line => {
+                        if (line.startsWith('data: ')) {
+                            const text = line.substring(6);
+                            
+                            if (text.startsWith('[CODE]')) {
+                                codeStatus.innerHTML = `<span class="text-green-500">● Streaming from gpt-oss...</span>`;
+                                const codeChunk = text.substring(6).replace(/\\n/g, '\n');
+                                codeViewer.innerHTML += codeChunk;
+                                codeViewer.scrollTo({ top: codeViewer.scrollHeight });
+                            } 
+                            else if (text === '[CODE_DONE]') {
+                                codeStatus.innerHTML = `<span class="text-zinc-500">Generation Complete</span>`;
+                            } 
+                            else if (text === '[DONE]') {
+                                btn.disabled = false;
+                                btn.classList.remove('bg-zinc-900', 'text-zinc-500', 'border-zinc-800');
+                                btn.classList.add('bg-white', 'text-black', 'hover:bg-green-400', 'hover:text-black', 'hover:border-green-300');
+                                btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> Deploy Autonomous Agent`;
+                                terminal.innerHTML += `<br><span class="text-white fade-in-line inline-block">➜</span> <span class="text-zinc-400 fade-in-line inline-block">~</span> `;
+                            } 
+                            else {
+                                let coloredText = text;
+                                if (text.includes('[SYSTEM]')) coloredText = `<span class="text-white font-bold">${text}</span>`;
+                                else if (text.includes('[AI]')) coloredText = `<span class="text-zinc-300">${text}</span>`;
+                                else if (text.includes('[GPU]') || text.includes('[TRAINING]')) coloredText = `<span class="text-green-400 font-semibold">${text}</span>`;
+                                else coloredText = `<span class="text-zinc-400">${text}</span>`;
+                                
+                                terminal.innerHTML += `<div class="fade-in-line">${coloredText}</div>`;
+                            }
+                            terminal.scrollTo({ top: terminal.scrollHeight, behavior: 'smooth' });
+                        }
+                    });
+                }
+            } catch (error) {
+                terminal.innerHTML += `<div class="fade-in-line text-white bg-red-900/50 px-2 py-1 inline-block">[ERROR] Connection failed: ${error.message}</div>`;
+                btn.disabled = false;
+                btn.classList.remove('bg-zinc-900', 'text-zinc-500', 'border-zinc-800');
+                btn.classList.add('bg-white', 'text-black', 'hover:bg-green-400', 'hover:text-black');
+                btn.innerHTML = `Retry Deployment`;
+                codeStatus.innerHTML = `<span class="text-red-500">Stream Aborted</span>`;
+            }
+        }
+    </script>
+</body>
+</html>
