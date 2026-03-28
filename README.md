@@ -1,5 +1,5 @@
 # ⚡️ ProjectZero (Tuner Edition)
-> **Vibe-driven MLOps Platform for Autonomous LLM Fine-Tuning**
+> **LLM модельдерін автономды баптауға (Fine-Tuning) арналған Vibe-driven MLOps платформасы**
 
 [![Status](https://img.shields.io/badge/Status-Live_MVP-brightgreen)](http://178.88.115.250)
 [![Brain](https://img.shields.io/badge/AI_Brain-gpt--oss:117b-white)](https://alem.ai)
@@ -8,53 +8,53 @@
 
 ---
 
-## 🌪 The Philosophy: Vibe-driven MLOps
-Fine-tuning Large Language Models is notoriously difficult. It requires deep knowledge of quantization, LoRA adapters, and boilerplate training code. 
+## 🌪 Философиясы: Vibe-driven MLOps
+Үлкен тілдік модельдерді (LLM) дообучение жасау — өте күрделі процесс. Ол үшін кванттау, LoRA адаптерлері және жүздеген жол кодты жазу бойынша терең білім қажет.
 
-**ProjectZero (Tuner Edition)** changes the game. Built on the "Vibe Coding" philosophy, it allows developers to describe their training goals in natural language. Our autonomous agent then architecturally analyzes the model and streams a production-ready training script in real-time.
+**ProjectZero (Tuner Edition)** бұл ережелерді өзгертеді. "Vibe Coding" философиясына негізделген платформа әзірлеушілерге өз мақсаттарын қарапайым тілде сипаттауға мүмкіндік береді. Біздің автономды агент модельді талдап, нақты уақыт режимінде дайын оқу скриптін (train.py) жазып береді.
 
-[**🌐 View Live Demo**](http://178.88.115.250)
+[**🌐 Live Demo-ны көру**](http://178.88.115.250)
 
 ---
 
-## 🛠 Features
-* **Live Hub Validation:** Real-time integration with HuggingFace API to verify model IDs and dataset availability.
-* **Real-time Code Streaming:** Watch the AI (gpt-oss:117b) write your `train.py` character by character using Server-Sent Events (SSE).
-* **Unsloth Integration:** Every generated script is optimized for 2x faster training and 4-bit quantization, making fine-tuning possible even on consumer GPUs (like RTX 2050).
-* **Autonomous Pipeline:** From prompt to executable training script in under 60 seconds.
+## 🛠 Мүмкіндіктері
+* **Live Hub Validation:** HuggingFace API-мен нақты уақытта интеграция жасап, модельдер мен датасеттерді тексереді.
+* **Real-time Code Streaming:** Жасанды интеллект (gpt-oss:117b) сіздің `train.py` кодыңызды Server-Sent Events (SSE) арқылы көз алдыңызды жазады.
+* **Unsloth Интеграциясы:** Барлық генерацияланған скрипттер Unsloth кітапханасына оңтайландырылған (4-bit LoRA), бұл тіпті RTX 2050 сияқты қарапайым карталарда баптау жасауға мүмкіндік береді.
+* **Автономды Пайплайн:** Идеядан дайын оқу скриптіне дейін — 60 секундтан аз уақыт.
 
-## 🏗 System Architecture (Node-based Flow)
-Our system follows a strictly linear pipeline inspired by modern low-code tools like n8n:
+## 🏗 Жүйе архитектурасы (Node-based Flow)
+Біздің жүйе n8n сияқты заманауи low-code құралдарынан шабыт алған:
 `User Input` ➜ `FastAPI Gateway` ➜ `Alem.plus Brain` ➜ `Live Script Generation` ➜ `Zero-Core Simulated Executor`
 
-## 💻 Tech Stack
-- **AI Core:** `gpt-oss` (117B) via Alem.plus API.
-- **Backend:** Python / FastAPI (Asynchronous streaming).
+## 💻 Технологиялық стек
+- **AI Core:** `gpt-oss` (117B) Alem.plus API арқылы.
+- **Backend:** Python / FastAPI (Асинхронды стриминг).
 - **Frontend:** Vanilla JS / Tailwind CSS (Cyber-monochrome Glassmorphism UI).
-- **Deployment:** Live on Ubuntu 24.04 Cloud Node.
+- **Деплой:** Ubuntu 24.04 Cloud Node-да тікелей эфирде.
 
 ---
 
-## ⚠️ Hackathon MVP Note for Judges
-To provide a high-fidelity demonstration within a hackathon environment:
-1.  **REAL GENERATION:** The AI Agent and code generation logic are **100% functional**. The Python code you see in the "Live Stream" window is generated in real-time by the LLM specifically for your prompt.
-2.  **SIMULATED EXECUTION:** The "System Output" terminal simulates the GPU cluster allocation and training steps. While the generated `train_generated.py` is a valid executable script, real hardware execution is bypassed for instant demo purposes.
+## ⚠️ Хакатон қазыларына арналған ескертпе
+Жобаның мүмкіндіктерін жоғары сапамен көрсету үшін:
+1.  **REAL GENERATION:** AI Агент және код генерациясы логикасы **100% жұмыс істеп тұр**. "Live Stream" терезесіндегі Python коды нақты уақытта сіздің сұранысыңызға сай жасалады.
+2.  **SIMULATED EXECUTION:** "System Output" терминалы GPU кластерін бөлу мен оқыту қадамдарын симуляциялайды. Генерацияланған `train_generated.py` — нақты жұмыс істейтін скрипт, бірақ демо мақсатында физикалық оқыту процесі өткізіліп жіберіледі.
 
 ---
 
-## 🚀 Getting Started (Local Node)
+## 🚀 Жұмысты бастау (Local Node)
 
-1.  **Clone the repo:**
+1.  **Репозиторийді көшіру:**
     ```bash
     git clone [https://github.com/Ernwr124/ProjectZero-tuner-edition.git](https://github.com/Ernwr124/ProjectZero-tuner-edition.git)
     cd ProjectZero-tuner-edition
     ```
-2.  **Configure Environment:**
-    Create a `.env` file and add your Alem API Key:
+2.  **Ортаны баптау:**
+    `.env` файлын ашып, Alem API кілтін енгізіңіз:
     ```text
     ALEM_API_KEY=your_key_here
     ```
-3.  **Install & Run:**
+3.  **Орнату және іске қосу:**
     ```bash
     python3 -m venv venv
     source venv/bin/activate
@@ -64,7 +64,7 @@ To provide a high-fidelity demonstration within a hackathon environment:
 
 ---
 
-### 🔗 About the Project
-ProjectZero (Tuner Edition) is a specialized module of the **ProjectZero AI** ecosystem.
+### 🔗 Жоба туралы
+ProjectZero (Tuner Edition) — бұл **ProjectZero AI** экожүйесінің арнайы модулі.
 
-**Powered by [ProjectZero ai](https://www.pzero.kz)** *(vibe coding service on Kazakhstan)*
+**Қуаттандырушы: [ProjectZero ai](https://www.pzero.kz)** *(Қазақстандағы vibe coding сервисі)*
